@@ -11,7 +11,6 @@ from drf_yasg import openapi
 from django.conf import settings
 from django.conf.urls.static import static
 
-
 schema_view = get_schema_view(
     openapi.Info(
         title="Freelance API",
@@ -23,7 +22,6 @@ schema_view = get_schema_view(
     # permission_classes=(permissions.AllowAny,),
 )
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
 
@@ -34,6 +32,14 @@ urlpatterns = [
     # Profile
     path('register/', RegisterAPIView.as_view()),
     path('profile/', ProfileRetrieveUpdateDestroyView.as_view()),
+
+    # Skill
+    path('skills/', SkillListCreateAPIView.as_view()),
+    path('skills/<int:pk>/', SkillDetailAPIView.as_view()),
+
+    # FreelancerSkill
+    path('freelancerSkill/', FreelancerSkillListCreateAPIView.as_view()),
+    path('freelancerSkill/<int:pk>/', FreelancerSkillDetailAPIView.as_view()),
 
     # Swagger
     # path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

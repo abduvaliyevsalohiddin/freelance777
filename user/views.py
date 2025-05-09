@@ -17,3 +17,27 @@ class ProfileRetrieveUpdateDestroyView(RetrieveUpdateAPIView):
 
     def get_object(self):
         return self.request.user
+
+
+class SkillListCreateAPIView(ListCreateAPIView):
+    queryset = Skill.objects.all()
+    serializer_class = SkillSerializer
+    permission_classes = [AllowAny]
+
+
+class SkillDetailAPIView(RetrieveUpdateDestroyAPIView):
+    queryset = Skill.objects.all()
+    serializer_class = SkillSerializer
+    permission_classes = [AllowAny]
+
+
+class FreelancerSkillListCreateAPIView(ListCreateAPIView):
+    queryset = FreelancerSkill.objects.all()
+    serializer_class = FreelancerSkillSerializer
+    permission_classes = [AllowAny]
+
+
+class FreelancerSkillDetailAPIView(RetrieveUpdateDestroyAPIView):
+    queryset = FreelancerSkill.objects.all()
+    serializer_class = FreelancerSkillSerializer
+    permission_classes = [AllowAny]
