@@ -1,10 +1,7 @@
 from rest_framework import generics, permissions
 from rest_framework.exceptions import PermissionDenied
-from .models import Category, Job, Proposal, Contract, Review, Resume
-from .serializers import (
-    CategorySerializer, JobSerializer, ProposalSerializer,
-    ContractSerializer, ReviewSerializer, ResumeSerializer
-)
+from .models import *
+from .serializers import *
 from user.models import Profile
 
 
@@ -22,6 +19,30 @@ class CategoryDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = [permissions.AllowAny]
+
+
+class SkillListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Skill.objects.all()
+    serializer_class = SkillSerializer
+    # permission_classes = [AllowAny]
+
+
+class SkillDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Skill.objects.all()
+    serializer_class = SkillSerializer
+    # permission_classes = [AllowAny]
+
+
+class FreelancerSkillListCreateAPIView(generics.ListCreateAPIView):
+    queryset = FreelancerSkill.objects.all()
+    serializer_class = FreelancerSkillSerializer
+    # permission_classes = [AllowAny]
+
+
+class FreelancerSkillDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = FreelancerSkill.objects.all()
+    serializer_class = FreelancerSkillSerializer
+    # permission_classes = [AllowAny]
 
 
 # -------------------------

@@ -1,12 +1,20 @@
 from rest_framework import serializers
-from .models import Category, Job, Proposal, Contract, Review, Resume
-from user.models import Skill, Profile
+from .models import *
+from user.models import Profile
 
 
 class SkillSerializer(serializers.ModelSerializer):
     class Meta:
         model = Skill
         fields = ['id', 'name']
+
+
+class FreelancerSkillSerializer(serializers.ModelSerializer):
+    skill = SkillSerializer()  # Nested skill info
+
+    class Meta:
+        model = FreelancerSkill
+        fields = ['id', 'skill', 'level']
 
 
 class CategorySerializer(serializers.ModelSerializer):

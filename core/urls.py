@@ -25,6 +25,10 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('admin/', admin.site.urls),
 
+    # Swagger
+    # path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('docs/', schema_view.with_ui('swagger', cache_timeout=0)),
+
     # Simple JWT
     path('token/', token_obtain_pair),
     path('token/refresh/', token_refresh),
@@ -41,9 +45,6 @@ urlpatterns = [
     path('freelancerSkill/', FreelancerSkillListCreateAPIView.as_view()),
     path('freelancerSkill/<int:pk>/', FreelancerSkillDetailAPIView.as_view()),
 
-    # Swagger
-    # path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    path('docs/', schema_view.with_ui('swagger', cache_timeout=0)),
 
     # Category
     path('categories/', CategoryListCreateAPIView.as_view()),

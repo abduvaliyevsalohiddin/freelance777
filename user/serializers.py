@@ -1,22 +1,8 @@
 from rest_framework import serializers
-from .models import Profile, Skill, FreelancerSkill
+from .models import Profile
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
-
-
-class SkillSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Skill
-        fields = ['id', 'name']
-
-
-class FreelancerSkillSerializer(serializers.ModelSerializer):
-    skill = SkillSerializer()  # Nested skill info
-
-    class Meta:
-        model = FreelancerSkill
-        fields = ['id', 'skill', 'level']
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -30,8 +16,8 @@ class ProfileSerializer(serializers.ModelSerializer):
             'location', 'profile_picture', 'freelancer_skills'
         ]
 
-    def get_freelancer_skills(self, obj):
-        if obj.is_freelancer:
-            skills = FreelancerSkill.objects.filter(user=obj)
-            return FreelancerSkillSerializer(skills, many=True).data
-        return []
+    # def get_freelancer_skills(self, obj):
+    #     if obj.is_freelancer:
+    #         skills = FreelancerSkill.objects.filter(user=obj)
+    #         return FreelancerSkillSerializer(skills, many=True).data
+    #     return []

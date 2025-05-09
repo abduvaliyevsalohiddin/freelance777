@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Job, Proposal, Contract, Review, Resume
+from .models import *
 from user.models import Profile
 
 
@@ -12,6 +12,10 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'description', 'created_date', 'updated_date')
     search_fields = ('name', 'description')
     list_filter = ('created_date', 'updated_date')
+
+
+admin.site.register(Skill)
+admin.site.register(FreelancerSkill)
 
 
 # -------------------------
