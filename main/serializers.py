@@ -10,8 +10,6 @@ class SkillSerializer(serializers.ModelSerializer):
 
 
 class FreelancerSkillSerializer(serializers.ModelSerializer):
-    skill = SkillSerializer()  # Nested skill info
-
     class Meta:
         model = FreelancerSkill
         fields = ['id', 'skill', 'level']
