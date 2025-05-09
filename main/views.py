@@ -31,7 +31,7 @@ class CategoryDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 class JobListCreateAPIView(generics.ListCreateAPIView):
     queryset = Job.objects.all()
     serializer_class = JobSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
     def perform_create(self, serializer):
         if not self.request.user.is_client:
@@ -48,7 +48,7 @@ class JobListCreateAPIView(generics.ListCreateAPIView):
 class JobDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Job.objects.all()
     serializer_class = JobSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
 
 # -------------------------
@@ -58,7 +58,7 @@ class JobDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 class ProposalListCreateAPIView(generics.ListCreateAPIView):
     queryset = Proposal.objects.all()
     serializer_class = ProposalSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
     def perform_create(self, serializer):
         if not self.request.user.is_freelancer:
@@ -77,7 +77,7 @@ class ProposalListCreateAPIView(generics.ListCreateAPIView):
 class ProposalDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Proposal.objects.all()
     serializer_class = ProposalSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
 
 # -------------------------
@@ -87,13 +87,13 @@ class ProposalDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 class ContractListCreateAPIView(generics.ListCreateAPIView):
     queryset = Contract.objects.all()
     serializer_class = ContractSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
 
 class ContractDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Contract.objects.all()
     serializer_class = ContractSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
 
 # -------------------------
@@ -103,7 +103,7 @@ class ContractDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 class ReviewListCreateAPIView(generics.ListCreateAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
     def perform_create(self, serializer):
         serializer.save(reviewer=self.request.user)
@@ -112,7 +112,7 @@ class ReviewListCreateAPIView(generics.ListCreateAPIView):
 class ReviewDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
 
 # -------------------------
@@ -122,7 +122,7 @@ class ReviewDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 class ResumeListCreateAPIView(generics.ListCreateAPIView):
     queryset = Resume.objects.all()
     serializer_class = ResumeSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -134,4 +134,4 @@ class ResumeListCreateAPIView(generics.ListCreateAPIView):
 class ResumeDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Resume.objects.all()
     serializer_class = ResumeSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
