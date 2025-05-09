@@ -38,12 +38,6 @@ class JobListCreateAPIView(generics.ListCreateAPIView):
             raise PermissionDenied("Only clients can post jobs.")
         serializer.save(client=self.request.user)
 
-    def get_queryset(self):
-        user = self.request.user
-        if user.is_freelancer:
-            return Job.objects.filter(is_open=True)
-        return Job.objects.all()
-
 
 class JobDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Job.objects.all()
@@ -65,13 +59,13 @@ class ProposalListCreateAPIView(generics.ListCreateAPIView):
             raise PermissionDenied("Only freelancers can submit proposals.")
         serializer.save(freelancer=self.request.user)
 
-    def get_queryset(self):
-        user = self.request.user
-        if user.is_freelancer:
-            return Proposal.objects.filter(freelancer=user)
-        elif user.is_client:
-            return Proposal.objects.filter(job__client=user)
-        return Proposal.objects.none()
+    # def get_queryset(self):
+    #     user = self.request.user
+    #     if user.is_freelancer:
+    #         return Proposal.objects.filter(freelancer=user)
+    #     elif user.is_client:
+    #         return Proposal.objects.filter(job__client=user)
+    #     return Proposal.objects.none()
 
 
 class ProposalDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
