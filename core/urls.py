@@ -35,7 +35,7 @@ urlpatterns = [
 
     # Profile
     path('register/', RegisterAPIView.as_view()),
-    path('profile/<int:pk>/', ProfileRetrieveUpdateDestroyView.as_view()),
+    path('profile/', ProfileRetrieveUpdateDestroyView.as_view()),
 
     # Skill
     path('skills/', SkillListCreateAPIView.as_view()),
