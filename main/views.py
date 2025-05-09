@@ -21,6 +21,10 @@ class CategoryDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.AllowAny]
 
 
+# -------------------------
+# Skill VIEWS
+# -------------------------
+
 class SkillListCreateAPIView(generics.ListCreateAPIView):
     queryset = Skill.objects.all()
     serializer_class = SkillSerializer
@@ -31,6 +35,11 @@ class SkillDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Skill.objects.all()
     serializer_class = SkillSerializer
     # permission_classes = [AllowAny]
+
+
+# -------------------------
+# FreelancerSkillList VIEWS
+# -------------------------
 
 
 class FreelancerSkillListCreateAPIView(generics.ListCreateAPIView):
