@@ -17,3 +17,9 @@ class ProfileRetrieveUpdateDestroyView(RetrieveUpdateAPIView):
 
     def get_object(self):
         return self.request.user
+
+
+class ProfileRetrieveView(RetrieveAPIView):
+    # permission_classes = (AllowAny,)
+    serializer_class = ProfileSerializer
+    queryset = Profile.objects.all()
