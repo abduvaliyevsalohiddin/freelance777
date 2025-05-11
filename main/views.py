@@ -3,6 +3,8 @@ from rest_framework.exceptions import PermissionDenied
 from .models import *
 from .serializers import *
 from user.models import Profile
+from rest_framework.response import Response
+from rest_framework import status
 
 
 # -------------------------
@@ -150,6 +152,27 @@ class ResumeListCreateAPIView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        data = []
+
+        for resume in queryset:
+            serialized_resume = self.get_serializer(resume).data
+            serialized_resume['user'] = {
+                "id": resume.user.id,
+                "username": resume.user.username,
+                "email": resume.user.email,
+                "phone": resume.user.phone,
+                "gender": resume.user.gender,
+                "bio": resume.user.bio,
+                "location": resume.user.location,
+                "profile_picture": request.build_absolute_uri(
+                    resume.user.profile_picture.url) if resume.user.profile_picture else None,
+            }
+            data.append(serialized_resume)
+
+        return Response(data, status=status.HTTP_200_OK)
 
 
 class ResumeDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
