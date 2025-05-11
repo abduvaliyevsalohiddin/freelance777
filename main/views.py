@@ -162,6 +162,8 @@ class ResumeListCreateAPIView(generics.ListCreateAPIView):
             serialized_resume['user'] = {
                 "id": resume.user.id,
                 "username": resume.user.username,
+                "first_name": resume.user.first_name,
+                "last_name": resume.user.last_name,
                 "email": resume.user.email,
                 "phone": resume.user.phone,
                 "gender": resume.user.gender,
