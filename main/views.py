@@ -1,5 +1,6 @@
 from rest_framework import generics, permissions
 from rest_framework.exceptions import PermissionDenied
+from rest_framework.permissions import SAFE_METHODS
 from .models import *
 from .serializers import *
 from user.models import Profile
@@ -65,6 +66,11 @@ class JobListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = JobSerializer
     permission_classes = [permissions.AllowAny]
 
+    def get_serializer_class(self):
+        if self.request.method in SAFE_METHODS:
+            return JobSerializerSafe
+        return self.serializer_class
+
     def perform_create(self, serializer):
         if not self.request.user.is_client:
             raise PermissionDenied("Only clients can post jobs.")
@@ -76,6 +82,11 @@ class JobDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = JobSerializer
     permission_classes = [permissions.AllowAny]
 
+    def get_serializer_class(self):
+        if self.request.method in SAFE_METHODS:
+            return JobSerializerSafe
+        return self.serializer_class
+
 
 # -------------------------
 # PROPOSAL VIEWS
@@ -86,24 +97,26 @@ class ProposalListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = ProposalSerializer
     permission_classes = [permissions.AllowAny]
 
+    def get_serializer_class(self):
+        if self.request.method in SAFE_METHODS:
+            return ProposalSerializerSafe
+        return self.serializer_class
+
     def perform_create(self, serializer):
         if not self.request.user.is_freelancer:
             raise PermissionDenied("Only freelancers can submit proposals.")
         serializer.save(freelancer=self.request.user)
-
-    # def get_queryset(self):
-    #     user = self.request.user
-    #     if user.is_freelancer:
-    #         return Proposal.objects.filter(freelancer=user)
-    #     elif user.is_client:
-    #         return Proposal.objects.filter(job__client=user)
-    #     return Proposal.objects.none()
 
 
 class ProposalDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Proposal.objects.all()
     serializer_class = ProposalSerializer
     permission_classes = [permissions.AllowAny]
+
+    def get_serializer_class(self):
+        if self.request.method in SAFE_METHODS:
+            return ProposalSerializerSafe
+        return self.serializer_class
 
 
 # -------------------------
@@ -150,34 +163,21 @@ class ResumeListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = ResumeSerializer
     permission_classes = [permissions.AllowAny]
 
+    def get_serializer_class(self):
+        if self.request.method in SAFE_METHODS:
+            return ResumeSerializerSafe
+        return self.serializer_class
+
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
-
-    def list(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
-        data = []
-
-        for resume in queryset:
-            serialized_resume = self.get_serializer(resume).data
-            serialized_resume['user'] = {
-                "id": resume.user.id,
-                "username": resume.user.username,
-                "first_name": resume.user.first_name,
-                "last_name": resume.user.last_name,
-                "email": resume.user.email,
-                "phone": resume.user.phone,
-                "gender": resume.user.gender,
-                "bio": resume.user.bio,
-                "location": resume.user.location,
-                "profile_picture": request.build_absolute_uri(
-                    resume.user.profile_picture.url) if resume.user.profile_picture else None,
-            }
-            data.append(serialized_resume)
-
-        return Response(data, status=status.HTTP_200_OK)
 
 
 class ResumeDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Resume.objects.all()
     serializer_class = ResumeSerializer
     permission_classes = [permissions.AllowAny]
+
+    def get_serializer_class(self):
+        if self.request.method in SAFE_METHODS:
+            return ResumeSerializerSafe
+        return self.serializer_class

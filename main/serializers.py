@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import *
-from user.models import Profile
+from user.serializers import ProfileSerializer
 
 
 class SkillSerializer(serializers.ModelSerializer):
@@ -21,9 +21,25 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class JobSerializerSafe(serializers.ModelSerializer):
+    client = ProfileSerializer(read_only=True, many=False)
+
+    class Meta:
+        model = Job
+        fields = '__all__'
+
+
 class JobSerializer(serializers.ModelSerializer):
     class Meta:
         model = Job
+        fields = '__all__'
+
+
+class ProposalSerializerSafe(serializers.ModelSerializer):
+    freelancer = ProfileSerializer(read_only=True, many=False)
+
+    class Meta:
+        model = Proposal
         fields = '__all__'
 
 
@@ -42,6 +58,14 @@ class ContractSerializer(serializers.ModelSerializer):
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
+        fields = '__all__'
+
+
+class ResumeSerializerSafe(serializers.ModelSerializer):
+    user = ProfileSerializer(read_only=True, many=False)
+
+    class Meta:
+        model = Resume
         fields = '__all__'
 
 

@@ -22,4 +22,4 @@ class Profile(AbstractUser):
     profile_picture = models.ImageField(upload_to='profiles/', blank=True, null=True)
 
     def __str__(self):
-        return f"{self.phone}"
+        return f"{self.username}"
